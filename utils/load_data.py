@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 
-def load_data(filepath)
+def load_data(filepath):
     """
     Load input data from flat file with target variable as first column followed by however many feature variables
 
@@ -25,9 +25,9 @@ def load_data(filepath)
 
     X = df[features].values
     y = df[target].values
-    labels = df[target].unique().list()
+    labels = df[target].unique().tolist()
     labels.sort()
 
-    X_train, y_train, X_test, y_test = train_test_split(df, test_size = .30, random_state=42)
+    X_train, y_train, X_test, y_test = train_test_split(X, y, test_size = .30, random_state=42)
 
     return X_train, y_train, X_test, y_test, labels, features, target
