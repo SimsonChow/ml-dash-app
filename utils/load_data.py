@@ -10,7 +10,7 @@ def load_data(filepath):
         filepath: location of flat file
 
     returns:
-        labels: list of class labels for classification mdoel
+        labels: list of class labels for classification model
         features: list of string values containing names of model features
         target: list of singular string value containing the target variable name
         X_train: model features training of data values
