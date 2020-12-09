@@ -19,15 +19,20 @@ def load_data(filepath):
         y_test: model target variable test data values
 
     """
-    df = pd.read_csv(filepath)
-    target = df.columns[0]
+    df = pd.read_csv(filepath + '.csv')
+    
+    target = df.columns[-1]
     features = [col for col in df.columns if col not in target]
 
-    X = df[features].values
-    y = df[target].values
-    labels = df[target].unique().tolist()
+    # Features (Independent Variables)
+    X = df.drop(target, axis=1)
+
+    # Dependent Variable
+    y = df[target]
+    
+    labels = y.unique().tolist()
     labels.sort()
 
-    X_train, y_train, X_test, y_test = train_test_split(X, y, test_size = .30, random_state=42)
+    X_train, X_test, Y_train, Y_test = train_test_split(X, y, test_size=0.30, random_state=101)
 
-    return X_train, y_train, X_test, y_test, labels, features, target
+    return X_train, X_test, Y_train, Y_test, labels, features, target
