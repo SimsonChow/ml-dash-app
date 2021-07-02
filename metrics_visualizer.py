@@ -4,7 +4,6 @@ from yellowbrick.classifier import ROCAUC
 from yellowbrick.classifier import PrecisionRecallCurve
 from yellowbrick.classifier import ConfusionMatrix
 from config import *
-import utils_xai.helpers 
 
 class Visualizer():
     def __init__(self, X_train, X_test, y_train, y_test, labels, model, viz_selection, full_filepath, filename):
