@@ -5,3 +5,4 @@ VISUALIZERS = ['ClassificationReport','ConfusionMatrix', 'ROCAUC', 'PrecisionRec
 
 INPUT_PATH = "Data/Input/"
 OUTPUT_PATH = "Data/Output/"
+METRICS_PATH = "Data/Output/Metrics/"

@@ -6,7 +6,7 @@ from yellowbrick.classifier import ConfusionMatrix
 from config import *
 
 class Visualizer():
-    def __init__(self, X_train, X_test, y_train, y_test, labels, model, viz_selection, full_filepath, filename):
+    def __init__(self, X_train, X_test, y_train, y_test, labels, model, viz_selection, output_filepath, filename):
         """
         Class for yellowbrick classifier visualizer
         Args:
@@ -24,12 +24,10 @@ class Visualizer():
         self.model = model
         self.viz_selection = viz_selection
         self.filename = filename
-        self.metric_filepath = "/".join([full_filepath,"Metrics/"])
+        #self.metric_filepath = "".join([output_filepath,"Metrics/"])
+        self.metric_filepath = METRICS_PATH
         self.X_train, self.X_test, self.y_train, self.y_test = X_train, X_test, y_train, y_test
-        
-        # We need to check whether we are training a multiclass or a binary class model. If it is a binary classification model, 
-        # We need to use encode the test set with values of 1's and 0's for yellowbrick Precision Recall, Classification Report and 
-        # ROC AUC python package.   
+          
         self.isBinaryClassification = True if len(self.labels) == 2 else False
         if self.isBinaryClassification:
             labelencoder = LabelEncoder()
@@ -64,10 +62,7 @@ class Visualizer():
         Returns:
             matplotlib image saved as png
         """
-        #Create the filename directory to store all metrics images in there
-        utils_xai.helpers.create_dir(self.metric_filepath)
-
-        #Migrate all metrics results images to the created directory
+        #Move all metrics results output images to the created directory
         self.outpath_ = self.metric_filepath + self.viz_selection + '.png'
         return self.visualizer.show(outpath=self.outpath_, clear_figure=True)
 

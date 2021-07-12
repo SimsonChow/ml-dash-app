@@ -16,6 +16,10 @@ def processInputDataset(dataset, targetVariable):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3)
     return X_train, X_test, y_train, y_test, labels
 
+def modelTraining(model, X_train, y_train, OUTPUT_PATH):
+    trainedModel = model.fit(X_train, y_train)
+    saveTrainedModel(trainedModel, OUTPUT_PATH)
+
 def saveTrainedModel(trainedModel, OUTPUT_PATH):
     trainedModelName = str(trainedModel).replace("()","")
     trainedModelPath = "".join([OUTPUT_PATH, trainedModelName, ".pkl"])
@@ -28,15 +32,10 @@ def loadTrainedModel(trainedModel, OUTPUT_PATH):
     trainedModelObj = pd.read_pickle(trainedModelPath)
     return trainedModelObj
 
-def modelTraining(model, X_train, y_train, OUTPUT_PATH):
-    trainedModel = model.fit(X_train, y_train)
-    saveTrainedModel(trainedModel, OUTPUT_PATH)
-
 def createMetricImgs(X_train, X_test, y_train, y_test, labels, model, visualizer, full_filepath, filename):
     metricsViz = Visualizer(X_train, X_test, y_train, y_test, labels, model, visualizer, full_filepath,filename)
     metricsViz.evaluate()
     metricsViz.save_img()
-
 
 def main():
     filename = 'heart_failure_clinical_records_dataset.csv'
@@ -46,11 +45,8 @@ def main():
 
     #Call metrics function
     outputTrainedModel = loadTrainedModel(randomForestModel, OUTPUT_PATH)
-    outputFilePath = 'Data/Output/RandomForestClassifier.pkl'
     for visualizer in VISUALIZERS:
-        createMetricImgs(X_train, X_test, y_train, y_test, labels, outputTrainedModel, visualizer,outputFilePath, filename )
-
-
+        createMetricImgs(X_train, X_test, y_train, y_test, labels, outputTrainedModel, visualizer, OUTPUT_PATH, filename )
 
 if __name__ == '__main__':
     main()
