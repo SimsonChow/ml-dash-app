@@ -20,7 +20,8 @@ import pandas as pd
 
 external_stylesheets = [dbc.themes.BOOTSTRAP]
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-
+ 
+df = pd.read_csv('Data/Output/test.csv')
 app.layout = html.Div([
     dcc.Tabs([
         dcc.Tab(label='Metrics', children=[
@@ -57,11 +58,20 @@ app.layout = html.Div([
         ]),
         dcc.Tab(label='Explainable AI - ELI5', children=[
             html.Div([html.H2(" Explain Datapoint Prediction with ELI5: ")], style={'marginLeft': 10, 'marginBottom': 50, 'marginTop': 25}),
-            html.Div([html.H4("Enter an index row for analysis: ")], style={'marginLeft': 10, 'marginBottom': 50, 'marginTop': 25}),
             
             dbc.Row(
                 [
-                    dbc.Col([html.Div(dbc.Input(id='rowIndex', type='number', value = 0 , style={'marginLeft': 10,'width':125})), 
+                    dbc.Col([
+                            html.Div([html.H4("Test Dataset: ")], style={'marginLeft': 10, 'marginBottom': 50, 'marginTop': 25}),
+                            html.Div([         
+                            dash_table.DataTable(
+                                    data=df.to_dict('records'),
+                                    columns=[{'id': c, 'name': c} for c in df.columns],
+                                    style_table={'height': '400px', 'overflowY': 'auto'}
+                                )
+                            ], style={'marginLeft': 10, 'marginTop': 150, 'marginTop': 25}),
+                            html.Div([html.H4("Enter an index row for analysis: ")], style={'marginTop':10,'marginLeft': 10, 'marginBottom': 15, 'marginTop': 25}),
+                            html.Div(dbc.Input(id='rowIndex', type='number', value = 0 , style={'marginLeft': 10,'width':125})), 
                             html.Div(dbc.Button('Submit', id='eli5Button', n_clicks=0, style={'marginLeft': 10, 'marginBottom': 50, 'marginTop': 10})),
                             html.Div(id='eli5Table', style = {'marginLeft': 10, 'marginBottom': 50,'marginTop':10})]),
                 ],
